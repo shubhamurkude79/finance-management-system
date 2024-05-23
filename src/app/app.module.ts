@@ -8,6 +8,7 @@ import { TransactionFormComponent } from './transaction-form/transaction-form.co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TransactionService } from './services/transaction-service.service';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
+import { ReportChartComponent } from './report-chart/report-chart.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
     DashboardComponent,
     TransactionSummariesComponent,
     TransactionFormComponent,
-    TransactionListComponent
+    TransactionListComponent,
+    ReportChartComponent
   ],
   imports: [
     BrowserModule,
