@@ -1,0 +1,30 @@
+
+<div class="card mt-5">
+    <div class="card-header">
+        <h2>Finance Form</h2> 
+    </div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="transactionForm">
+        <div class="form-group mb-3">
+            <label for="amount">Amount</label>
+            <input id="amount" formControlName="amount" type="number" class="form-control"/>
+            <div *ngIf="transactionForm.invalid" class="text-danger">
+                <small>* Amount is required and must be a number.</small>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label for="date">Date</label>
+            <input id="date" formControlName="date" type="date" class="form-control"/>
+            <div *ngIf="transactionForm.invalid" class="text-danger">
+                <small>* Date is required.</small>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label for="category">Category</label>
+            <input id="category" formControlName="category" type="text" class="form-control"/>
+            <div *ngIf="transactionForm.invalid" class="text-danger">
+                <small>* Category is required.</small>
+            </div>
+        </div>
+        <button class="btn btn-primary mt-3" type="submit" [disabled]="transactionForm.invalid">Add transaction</button>
+    </form>
+</div>
