@@ -9,7 +9,8 @@
             <input id="amount" formControlName="amount" type="number" class="form-control"/>
             <div *ngIf="transactionForm.get('amount')?.invalid && transactionForm.get('amount')?.touched"
              class="text-danger">
-                <small>* Amount is required and must be a number.</small>
+                <small *ngIf="transactionForm.get('amount')?.errors?.required">Amount is required.</small>
+                <small *ngIf="transactionForm.get('amount')?.errors?.min">Amount must be greater than zero.</small>
             </div>
         </div>
         <div class="form-group mb-3">
