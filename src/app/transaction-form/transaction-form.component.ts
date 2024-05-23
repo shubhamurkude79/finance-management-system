@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { TransactionService } from '../services/transaction-service.service';
+import { TransactionService, Transaction } from '../services/transaction-service.service';
 
 @Component({
   selector: 'app-transaction-form',
@@ -10,7 +10,7 @@ import { TransactionService } from '../services/transaction-service.service';
 export class TransactionFormComponent implements OnInit {
   transactionForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private transacService: TransactionService) {
+  constructor(private fb: FormBuilder, private transactionService: TransactionService) {
     this.transactionForm = this.fb.group({
       amount: [null, [Validators.required, Validators.min(0.01)]],
       date: [null, Validators.required],
@@ -24,7 +24,11 @@ export class TransactionFormComponent implements OnInit {
 
   onSubmit() {
     if(this.transactionForm.valid){
-      this.transacService.addTransaction(this.transactionForm.value);
+      const newTransaction: Transaction = {
+        id: Date.now(),
+        ...this.transactionForm.value
+      }
+      this.transactionService.addTransaction(newTransaction);
       this.transactionForm.reset();
     }
   }

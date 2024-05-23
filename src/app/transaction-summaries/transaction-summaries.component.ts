@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionService } from '../services/transaction-service.service';
+import { Transaction, TransactionService } from '../services/transaction-service.service';
 
 @Component({
   selector: 'app-transaction-summaries',
@@ -7,13 +7,15 @@ import { TransactionService } from '../services/transaction-service.service';
   styleUrls: ['./transaction-summaries.component.scss']
 })
 export class TransactionSummariesComponent implements OnInit {
+  transactions: Transaction[] = [];
   totalTransactions = 0;
   totalAmount = 0;
 
-  constructor(private transacService: TransactionService) { }
+  constructor(private transactionService: TransactionService) { }
 
   ngOnInit(): void {
-    this.transacService.transactions$.subscribe(transactions => {
+    this.transactionService.transactions$.subscribe(transactions => {
+      this.transactions = transactions;
       this.totalTransactions = transactions.length;
       this.totalAmount = transactions.reduce((sum, transaction) => sum + transaction.amount, 0) 
     });

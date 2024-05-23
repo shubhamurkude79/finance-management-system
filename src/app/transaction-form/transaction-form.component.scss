@@ -5,3 +5,8 @@
     margin-bottom: 20px;
     padding: 10px;
 }
+
+.btn:disabled{
+    pointer-events: fill;
+    cursor:not-allowed;
+}

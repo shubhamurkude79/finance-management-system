@@ -9,10 +9,10 @@ import { TransactionService } from '../services/transaction-service.service';
 export class TransactionListComponent implements OnInit {
   transactions:any = [];
 
-  constructor(private trnasacService: TransactionService) { }
+  constructor(private transactionService: TransactionService) { }
 
   ngOnInit(): void {
-    this.trnasacService.transactions$.subscribe(transact => {
+    this.transactionService.transactions$.subscribe(transact => {
       this.transactions = transact;
     });
   }
