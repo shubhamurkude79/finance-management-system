@@ -12,8 +12,8 @@ export class TransactionFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private transacService: TransactionService) {
     this.transactionForm = this.fb.group({
-      amount: ['', Validators.required],
-      date: ['', Validators.required],
+      amount: [null, [Validators.required, Validators.min(0.01)]],
+      date: [null, Validators.required],
       category: ['', Validators.required]
     });
   }

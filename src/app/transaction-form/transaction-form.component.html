@@ -7,21 +7,23 @@
         <div class="form-group mb-3">
             <label for="amount">Amount</label>
             <input id="amount" formControlName="amount" type="number" class="form-control"/>
-            <div *ngIf="transactionForm.invalid" class="text-danger">
+            <div *ngIf="transactionForm.get('amount')?.invalid && transactionForm.get('amount')?.touched"
+             class="text-danger">
                 <small>* Amount is required and must be a number.</small>
             </div>
         </div>
         <div class="form-group mb-3">
             <label for="date">Date</label>
             <input id="date" formControlName="date" type="date" class="form-control"/>
-            <div *ngIf="transactionForm.invalid" class="text-danger">
+            <div *ngIf="transactionForm.get('date')?.invalid && transactionForm.get('date')?.touched"
+             class="text-danger">
                 <small>* Date is required.</small>
             </div>
         </div>
         <div class="form-group mb-3">
             <label for="category">Category</label>
             <input id="category" formControlName="category" type="text" class="form-control"/>
-            <div *ngIf="transactionForm.invalid" class="text-danger">
+            <div *ngIf="transactionForm.get('category')?.invalid && transactionForm.get('category')?.touched" class="text-danger">
                 <small>* Category is required.</small>
             </div>
         </div>
