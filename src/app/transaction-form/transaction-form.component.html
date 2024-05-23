@@ -28,6 +28,10 @@
                 <small>* Category is required.</small>
             </div>
         </div>
+        <div class="form-group mb-3">
+            <label for="category">Description</label>
+            <textarea id="description" formControlName="description" type="text" class="form-control"></textarea>
+        </div>
         <button class="btn btn-primary mt-3" type="submit" [disabled]="transactionForm.invalid">Add transaction</button>
     </form>
 </div>

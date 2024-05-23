@@ -14,7 +14,8 @@ export class TransactionFormComponent implements OnInit {
     this.transactionForm = this.fb.group({
       amount: [null, [Validators.required, Validators.min(0.01)]],
       date: [null, Validators.required],
-      category: ['', Validators.required]
+      category: ['', Validators.required],
+      description: ['']
     });
   }
 
