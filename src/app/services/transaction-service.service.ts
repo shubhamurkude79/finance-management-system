@@ -6,7 +6,7 @@ export interface Transaction {
   date: Date;
   amount: number;
   category: string;
-  description: string;
+  description?: string;
 }
 @Injectable({
   providedIn: 'root'
@@ -25,4 +25,24 @@ export class TransactionService {
   getTransaction(){
     return this.transactions;
   }
+
+  sortTransactions(criteria: string, direction: 'asc' | 'desc'): void {
+    const sortedTransactions = [...this.transactions].sort((a, b) => {
+      if (criteria === 'date') {
+        return direction === 'asc'
+          ? new Date(a.date).getTime() - new Date(b.date).getTime()
+          : new Date(b.date).getTime() - new Date(a.date).getTime();
+      } else if (criteria === 'amount') {
+        return direction === 'asc' ? a.amount - b.amount : b.amount - a.amount;
+      } else if (criteria === 'category') {
+        return direction === 'asc'
+          ? a.category.localeCompare(b.category)
+          : b.category.localeCompare(a.category);
+      }
+      return 0;
+    });
+    this.transactionSubject.next(sortedTransactions);
+  }
+
+
 }
