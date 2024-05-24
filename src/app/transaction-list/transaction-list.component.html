@@ -1,21 +1,61 @@
 <div class="card">
     <div class="card-header">
-        <h2>Transaction list</h2>
+      <h2>Transaction List</h2>
     </div>
+  
+    <div class="sort-filter-container">
+      <div>
+        <label for="sort-asc">Sort by (Ascending): </label>
+        <select id="sort-asc" (change)="onSort($event, 'asc')">
+          <option value="date">Date</option>
+          <option value="amount">Amount</option>
+          <option value="category">Category</option>
+        </select>
+      </div>
+      <div>
+        <label for="sort-desc">Sort by (Descending): </label>
+        <select id="sort-desc" (change)="onSort($event, 'desc')">
+          <option value="date">Date</option>
+          <option value="amount">Amount</option>
+          <option value="category">Category</option>
+        </select>
+      </div>
+    </div>
+  
+    <div [formGroup]="filterForm">
+      <label for="filter">Filter by: </label>
+      <select formControlName="criteria">
+        <option value="date">Date</option>
+        <option value="amount">Amount</option>
+        <option value="category">Category</option>
+      </select>
+      <input type="text" formControlName="value" placeholder="Enter filter value" />
+      <button (click)="onFilter()">Filter</button>
+    </div>
+  
+    <div>
+        <input type="text" placeholder="Search by description" (input)="onSearch($event)" />
+      </div>
+  
+    <button (click)="resetFilters()">Reset</button>
+  
     <table>
-        <thead>
-            <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let transaction of transactions">
-                <td>{{ transaction.date }}</td>
-                <td>{{ transaction.amount }}</td>
-                <td>{{ transaction.category }}</td>
-            </tr>
-        </tbody>
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Category</th>
+          <th scope="col">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactions">
+          <td>{{ transaction.date | date }}</td>
+          <td>{{ transaction.amount }}</td>
+          <td>{{ transaction.category }}</td>
+          <td>{{ transaction.description }}</td>
+        </tr>
+      </tbody>
     </table>
-</div>
+  </div>
+  

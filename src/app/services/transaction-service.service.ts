@@ -44,5 +44,23 @@ export class TransactionService {
     this.transactionSubject.next(sortedTransactions);
   }
 
+  filterTransactions(criteria: keyof Transaction, value: string): void {
+    const filteredTransactions = this.transactions.filter(transaction => {
+      const transactionValue = transaction[criteria];
+      if (typeof transactionValue === 'string') {
+        return transactionValue.toLowerCase().includes(value.toLowerCase());
+      } else if (typeof transactionValue === 'number') {
+        return transactionValue === Number(value);
+      } else if (transactionValue instanceof Date) {
+        return transactionValue.toISOString().includes(value);
+      }
+      return false;
+    });
+    this.transactionSubject.next(filteredTransactions);
+  }
+
+  resetTransactions(): void {
+    this.transactionSubject.next(this.transactions);
+  }
 
 }
