@@ -60,7 +60,7 @@ export class TransactionService {
   }
 
   resetTransactions(): void {
-    this.transactionSubject.next(this.transactions);
+    this.transactionSubject.next([]);
   }
 
 }
