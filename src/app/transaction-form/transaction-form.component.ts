@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TransactionService, Transaction } from '../services/transaction-service.service';
 
@@ -7,7 +7,7 @@ import { TransactionService, Transaction } from '../services/transaction-service
   templateUrl: './transaction-form.component.html',
   styleUrls: ['./transaction-form.component.scss']
 })
-export class TransactionFormComponent implements OnInit {
+export class TransactionFormComponent {
   transactionForm: FormGroup;
 
   constructor(private fb: FormBuilder, private transactionService: TransactionService) {
@@ -17,9 +17,6 @@ export class TransactionFormComponent implements OnInit {
       category: ['', Validators.required],
       description: ['']
     });
-  }
-
-  ngOnInit(): void {
   }
 
   onSubmit() {
