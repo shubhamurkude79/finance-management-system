@@ -1,8 +1,22 @@
 <div class="dashboard">
     <h1>Finance Management System</h1>
-    <app-transaction-form></app-transaction-form>
-    <app-transaction-summaries></app-transaction-summaries>
-    <app-transaction-list></app-transaction-list>
+    <div class="shared-container">
+        <div class="div-left">
+            <app-transaction-form></app-transaction-form>
+        </div>
+        <div class="div-right">
+            <app-report-chart></app-report-chart>
+        </div>
+    </div>
+    
+    <div class="shared-container">
+        <div class="div-left">
+            <app-transaction-summaries></app-transaction-summaries>
+        </div>
+        <div class="div-right">
+            <app-transaction-list></app-transaction-list>
+        </div>
+    </div>
 </div>
 
 

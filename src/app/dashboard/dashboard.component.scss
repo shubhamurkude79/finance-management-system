@@ -8,7 +8,21 @@
         text-align: center;
     }
 }
+.shared-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: center;
+}
+.div-left{
+    padding: 5px;
+}
+.div-right {    
+    padding: 5px;
+}
 
-@media(min-width: 780px){
-    
+@media(max-width: 780px){
+    .shared-container {
+        grid-template-columns: 1fr; /* Stack divs vertically */
+    }
 }
