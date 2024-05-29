@@ -21,9 +21,13 @@ export class TransactionFormComponent {
 
   onSubmit() {
     if(this.transactionForm.valid){
+      const formValue = this.transactionForm.value;
       const newTransaction: Transaction = {
         id: Date.now(),
-        ...this.transactionForm.value
+        date: new Date(formValue.date), // Ensure date is parsed as Date object
+        amount: formValue.amount,
+        category: formValue.category,
+        description: formValue.description
       }
       this.transactionService.addTransaction(newTransaction);
       this.transactionForm.reset();
