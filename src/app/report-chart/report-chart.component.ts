@@ -45,7 +45,7 @@ export class ReportChartComponent implements OnInit {
           dates,
           amounts
         ],
-        type: 'bar'
+        type: 'line'
       },
       axis: {
         x: {

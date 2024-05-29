@@ -24,7 +24,7 @@ export class TransactionFormComponent {
       const formValue = this.transactionForm.value;
       const newTransaction: Transaction = {
         id: Date.now(),
-        date: new Date(formValue.date), // Ensure date is parsed as Date object
+        date: new Date(formValue.date),
         amount: formValue.amount,
         category: formValue.category,
         description: formValue.description
