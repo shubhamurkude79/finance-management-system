@@ -6,7 +6,7 @@
     <form (ngSubmit)="onSubmit()" [formGroup]="transactionForm">
         <div class="form-group mb-3">
             <label for="amount">Amount</label>
-            <input id="amount" formControlName="amount" type="number" class="form-control"/>
+            <input id="amount" formControlName="amount" type="number" class="form-control" placeholder="type expense amount..." />
             <div *ngIf="transactionForm.get('amount')?.invalid && transactionForm.get('amount')?.touched"
              class="text-danger">
                 <small *ngIf="transactionForm.get('amount')?.errors?.required">Amount is required.</small>
@@ -23,14 +23,14 @@
         </div>
         <div class="form-group mb-3">
             <label for="category">Category</label>
-            <input id="category" formControlName="category" type="text" class="form-control"/>
+            <input id="category" formControlName="category" type="text" class="form-control" placeholder="category of your expense..." />
             <div *ngIf="transactionForm.get('category')?.invalid && transactionForm.get('category')?.touched" class="text-danger">
                 <small>* Category is required.</small>
             </div>
         </div>
         <div class="form-group mb-3">
             <label for="category">Description</label>
-            <textarea id="description" formControlName="description" type="text" class="form-control"></textarea>
+            <textarea id="description" formControlName="description" type="text" class="form-control" placeholder="describe about your expense..."></textarea>
         </div>
         <button class="btn btn-primary mt-3" type="submit" [disabled]="transactionForm.invalid">Add transaction</button>
     </form>
