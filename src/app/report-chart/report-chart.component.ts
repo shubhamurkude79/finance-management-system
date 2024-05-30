@@ -51,8 +51,12 @@ export class ReportChartComponent implements OnInit {
         x: {
           type: 'category',
           tick: {
-            format: '%Y-%m-%d'
-          }
+            fit: true,
+            format: '%Y-%m-%d',
+            rotate: 70,
+            multiline: false
+          },
+          height: 100
         },
         y: {
           label: {
