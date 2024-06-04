@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface Transaction {
   id: number;
@@ -12,18 +14,23 @@ export interface Transaction {
   providedIn: 'root'
 })
 export class TransactionService {
+  private ec2InstanceUrl = environment.ec2instance;
   private transactionSubject = new BehaviorSubject<Transaction[]>([]);
   transactions$ = this.transactionSubject.asObservable();
   private transactions: Transaction[] = [];
 
+  constructor(private http: HttpClient){}
+
   addTransaction(transaction: Transaction){
-    this.transactions.push(transaction);
-    this.transactionSubject.next(this.transactions);
+    // this.transactions.push(transaction);
+    // this.transactionSubject.next(this.transactions);
+    return this.http.post<Transaction>(this.ec2InstanceUrl, transaction);
     console.log('transactions: ', this.transactions)
   }
 
   getTransaction(){
-    return this.transactions;
+    // return this.transactions;
+    return this.http.get<Transaction[]>(this.ec2InstanceUrl);
   }
 
   sortTransactions(criteria: string, direction: 'asc' | 'desc'): void {

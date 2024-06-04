@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  ec2instance: 'http://i-0bccbf7f139946b47/transactions'
 };
 
 /*
