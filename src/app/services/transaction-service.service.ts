@@ -23,9 +23,6 @@ export class TransactionService {
   constructor(private http: HttpClient){}
 
   addTransaction(transaction: Transaction){
-    // this.transactions.push(transaction);
-    // this.transactionSubject.next(this.transactions);
-    console.log('transactions: ', this.transactions)
     return this.http.post<Transaction>(`${this.ec2InstanceUrl}/transactions`, transaction).subscribe(response => {
       this.transactions.push(response);
       this.transactionSubject.next(this.transactions);
