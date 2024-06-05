@@ -26,28 +26,18 @@ export class TransactionService {
     // this.transactions.push(transaction);
     // this.transactionSubject.next(this.transactions);
     console.log('transactions: ', this.transactions)
-    return this.http.post<Transaction>(this.ec2InstanceUrl, transaction).pipe(
-      catchError(this.handleError)
-    );
+    return this.http.post<Transaction>(`${this.ec2InstanceUrl}/transactions`, transaction).subscribe(response => {
+      this.transactions.push(response);
+      this.transactionSubject.next(this.transactions);
+    });
   }
 
-  getTransaction(){
-    // return this.transactions;
-    return this.http.get<Transaction[]>(this.ec2InstanceUrl);
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    // Handle the error here
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred
-      errorMessage = `Client-side error: ${error.error.message}`;
-    } else {
-      // The backend returned an unsuccessful response code
-      errorMessage = `Server-side error: ${error.status} - ${error.message}`;
-    }
-    console.error(errorMessage);
-    return throwError(errorMessage);
+  getTransaction() {
+    return this.http.get<Transaction[]>(`${this.ec2InstanceUrl}/transactions`)
+      .subscribe(transactions => {
+        this.transactions = transactions;
+        this.transactionSubject.next(transactions);
+      });
   }
 
   sortTransactions(criteria: string, direction: 'asc' | 'desc'): void {
