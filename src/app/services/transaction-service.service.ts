@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 export interface Transaction {
@@ -24,13 +25,29 @@ export class TransactionService {
   addTransaction(transaction: Transaction){
     // this.transactions.push(transaction);
     // this.transactionSubject.next(this.transactions);
-    return this.http.post<Transaction>(this.ec2InstanceUrl, transaction);
     console.log('transactions: ', this.transactions)
+    return this.http.post<Transaction>(this.ec2InstanceUrl, transaction).pipe(
+      catchError(this.handleError)
+    );
   }
 
   getTransaction(){
     // return this.transactions;
     return this.http.get<Transaction[]>(this.ec2InstanceUrl);
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    // Handle the error here
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred
+      errorMessage = `Client-side error: ${error.error.message}`;
+    } else {
+      // The backend returned an unsuccessful response code
+      errorMessage = `Server-side error: ${error.status} - ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(errorMessage);
   }
 
   sortTransactions(criteria: string, direction: 'asc' | 'desc'): void {

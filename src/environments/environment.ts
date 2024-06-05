@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  ec2instance: 'http://i-0bccbf7f139946b47/transactions'
+  ec2instance: 'http://ec2-34-207-206-87.compute-1.amazonaws.com/transactions'
 };
 
 /*
