@@ -11,6 +11,7 @@ import { TransactionService } from './services/transaction-service.service';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { ReportChartComponent } from './report-chart/report-chart.component';
 import { DummyComponent } from './dummy/dummy.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { DummyComponent } from './dummy/dummy.component';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [TransactionService],
   bootstrap: [AppComponent]
