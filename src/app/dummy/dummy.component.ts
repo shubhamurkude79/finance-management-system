@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment';
 export class DummyComponent implements OnInit {
   dummyURL = environment.dummyURL;
   dummyData: any[] = [];
+  limit: number = 20;
+  offset: number = 0;
 
   constructor(private http: HttpClient) { }
 
@@ -18,11 +20,12 @@ export class DummyComponent implements OnInit {
   }
 
   fetchData(){
-    this.http.get(this.dummyURL)
-      .subscribe((data: any) => {
-        this.dummyData = data;
-        console.log(this.dummyData)
-      })
+    this.http.get(`${this.dummyURL}?limit=${this.limit}&offset=${this.offset}`)
+    .subscribe((data: any) => {
+      this.dummyData = this.dummyData.concat(data); // Append new data to existing data
+      this.offset += this.limit; // Update the offset for the next fetch
+      console.log(this.dummyData);
+    });
   }
 
 }
