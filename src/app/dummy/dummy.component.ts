@@ -12,6 +12,7 @@ export class DummyComponent implements OnInit {
   dummyData: any[] = [];
   limit: number = 20;
   offset: number = 0;
+  allDataLoaded: boolean = false;
 
   constructor(private http: HttpClient) { }
 
@@ -20,8 +21,11 @@ export class DummyComponent implements OnInit {
   }
 
   fetchData(){
-    this.http.get(`${this.dummyURL}?limit=${this.limit}&offset=${this.offset}`)
+    this.http.get(`${this.dummyURL}?_limit=${this.limit}&_start=${this.offset}`)
     .subscribe((data: any) => {
+      if (data.length < this.limit) {
+        this.allDataLoaded = true; // If less data is fetched than the limit, all data is loaded
+      }
       this.dummyData = this.dummyData.concat(data); // Append new data to existing data
       this.offset += this.limit; // Update the offset for the next fetch
       console.log(this.dummyData);
