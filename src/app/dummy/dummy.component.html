@@ -13,9 +13,9 @@
             <td>{{i+1}}</td>
             <td>{{data.title}}</td>
             <td>{{data.completed}}</td>
-            <td><button type="button" (click)=deleteItem(i)>X</button></td>
+            <td><button type="button" class="btn btn-danger" (click)=deleteItem(i)>X</button></td>
           </tr>
         </tbody>
       </table>
-      <button (click)="fetchData()" type="button" class="btn btn-secondary btn-block" *ngIf="!allDataLoaded">Load More</button>
+      <button type="button" class="btn btn-secondary btn-block" (click)="fetchData()" *ngIf="!allDataLoaded">Load More</button>
 </div>
