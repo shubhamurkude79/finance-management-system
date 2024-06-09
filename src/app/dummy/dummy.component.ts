@@ -24,11 +24,10 @@ export class DummyComponent implements OnInit {
     this.http.get(`${this.dummyURL}?_limit=${this.limit}&_start=${this.offset}`)
     .subscribe((data: any) => {
       if (data.length < this.limit) {
-        this.allDataLoaded = true; // If less data is fetched than the limit, all data is loaded
+        this.allDataLoaded = true;
       }
-      this.dummyData = this.dummyData.concat(data); // Append new data to existing data
-      this.offset += this.limit; // Update the offset for the next fetch
-      console.log(this.dummyData);
+      this.dummyData = this.dummyData.concat(data);
+      this.offset += this.limit;
     });
   }
 
