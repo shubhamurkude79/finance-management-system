@@ -44,4 +44,8 @@ export class DummyComponent implements OnInit, OnDestroy {
     this.dummyData.splice(index, 1);
   }
 
+  trackById(index: number, item: any){
+    return item.id;
+  }
+
 }

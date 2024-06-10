@@ -9,7 +9,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of dummyData; let i = index">
+          <tr *ngFor="let data of dummyData; let i = index; trackBy: trackById">
             <td>{{i+1}}</td>
             <td>{{data.title}}</td>
             <td>{{data.completed}}</td>
