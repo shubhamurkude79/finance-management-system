@@ -10,7 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TransactionService } from './services/transaction-service.service';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { ReportChartComponent } from './report-chart/report-chart.component';
-import { DummyComponent } from './dummy/dummy.component';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
@@ -20,8 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
     TransactionSummariesComponent,
     TransactionFormComponent,
     TransactionListComponent,
-    ReportChartComponent,
-    DummyComponent
+    ReportChartComponent
   ],
   imports: [
     BrowserModule,
