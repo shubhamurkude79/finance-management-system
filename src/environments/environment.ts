@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  ec2instance: 'http://ec2-34-207-206-87.compute-1.amazonaws.com',
+  ec2instance: 'http://localhost:3000',
   dummyURL: 'https://jsonplaceholder.typicode.com/todos'
 };
 
