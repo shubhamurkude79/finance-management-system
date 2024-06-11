@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { Transaction, TransactionService } from '../services/transaction-service.service';
 import * as c3 from 'c3';
 import { Subscription } from 'rxjs';
@@ -8,13 +8,13 @@ import { Subscription } from 'rxjs';
   templateUrl: './report-chart.component.html',
   styleUrls: ['./report-chart.component.scss']
 })
-export class ReportChartComponent implements OnInit {
+export class ReportChartComponent implements AfterViewInit, OnDestroy {
   transactions: Transaction[] = [];
   subscription: Subscription | undefined;
   
   constructor(private transactionService: TransactionService) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.transactionReportData();
   }
 
@@ -27,12 +27,16 @@ export class ReportChartComponent implements OnInit {
   transactionReportData(): void {
     this.subscription = this.transactionService.transactions$.subscribe(transactions => {
       this.transactions = transactions;
-
-      // Transform data for c3.js
-      const dates: [string, ...string[]] = ['x', ...this.transactions.map(transaction => transaction.date.toISOString().split('T')[0])];
+      console.log('chart', this.transactions);
+      const dates: [string, ...string[]] = ['x', ...this.transactions.map(transaction => {
+        if (transaction.date instanceof Date) {
+          return transaction.date.toISOString().split('T')[0];
+        }
+        return '';
+      })];
       const amounts: [string, ...number[]] = ['Amount', ...this.transactions.map(transaction => transaction.amount)];
-
-      this.generateBarChart(dates, amounts);
+      
+        this.generateBarChart(dates, amounts);
     });
   }
 
