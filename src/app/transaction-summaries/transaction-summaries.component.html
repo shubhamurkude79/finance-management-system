@@ -7,7 +7,7 @@
         <p class="card-text">Total Amount: {{ totalAmount }} </p>
         <ul>
             <li *ngFor="let transaction of transactions">
-              {{ transaction.date | date }}: {{ transaction.category }} - {{ transaction.amount | currency }}
+              {{ transaction.date | date }}: {{ transaction.category }} - {{ transaction.amount | currency: '&#8377;' }}
             </li>
           </ul>
     </div>
