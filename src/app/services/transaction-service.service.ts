@@ -24,6 +24,7 @@ export class TransactionService {
 
   addTransaction(transaction: Transaction){
     return this.http.post<Transaction>(`${this.ec2InstanceUrl}/transactions`, transaction).subscribe(response => {
+      response.date = new Date(response.date);
       this.transactions.push(response);
       this.transactionSubject.next(this.transactions);
     });
@@ -32,7 +33,10 @@ export class TransactionService {
   getTransaction() {
     return this.http.get<Transaction[]>(`${this.ec2InstanceUrl}/transactions`)
       .subscribe(transactions => {
-        this.transactions = transactions;
+        this.transactions = transactions.map(transaction => ({
+          ...transaction,
+          date: new Date(transaction.date)
+        }));
         this.transactionSubject.next(transactions);
       });
   }

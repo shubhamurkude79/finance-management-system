@@ -29,6 +29,7 @@ export class ReportChartComponent implements AfterViewInit, OnDestroy {
       this.transactions = transactions;
       console.log('chart', this.transactions);
       const dates: [string, ...string[]] = ['x', ...this.transactions.map(transaction => {
+      console.log('date: ', transaction.date);
         if (transaction.date instanceof Date) {
           return transaction.date.toISOString().split('T')[0];
         }
