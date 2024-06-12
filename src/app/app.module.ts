@@ -11,6 +11,7 @@ import { TransactionService } from './services/transaction-service.service';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { ReportChartComponent } from './report-chart/report-chart.component';
 import { AppRoutingModule } from './app-routing.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { AppRoutingModule } from './app-routing.module';
     TransactionSummariesComponent,
     TransactionFormComponent,
     TransactionListComponent,
-    ReportChartComponent
+    ReportChartComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
