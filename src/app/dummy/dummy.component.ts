@@ -40,7 +40,6 @@ export class DummyComponent implements OnInit, OnDestroy {
   }
 
   deleteItem(index: number){
-    console.log(index);
     this.dummyData.splice(index, 1);
   }
 
