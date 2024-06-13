@@ -35,9 +35,9 @@ describe('ReportChartComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize and call transaction report data on ngOnInit', () => {
+  it('should initialize and call transaction report data on ngAfterViewInit', () => {
     spyOn(component, 'transactionReportData');
-    component.ngOnInit();
+    component.ngAfterViewInit();
     expect(component.transactionReportData).toHaveBeenCalled();
   });
 
