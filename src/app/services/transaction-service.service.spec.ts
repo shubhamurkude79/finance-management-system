@@ -66,10 +66,10 @@ describe('TransactionService', () => {
   });
 
   it('should sort transactions by date in ascending order', (done) => {
-    service.resetTransactions();
-    initialTransactions.forEach(transaction => service.addTransaction(transaction));
-    const reqs = httpMock.match(`${environment.ec2instance}/transactions`);
-    reqs.forEach(req => req.flush({}));
+    service.getTransaction();
+
+    const req = httpMock.expectOne(`${environment.ec2instance}/transactions`);
+    req.flush(initialTransactions);
 
     service.sortTransactions('date', 'asc');
     service.transactions$.subscribe(sortedTransactions => {
@@ -80,57 +80,75 @@ describe('TransactionService', () => {
     });
   });
 
-  it('should sort transactions by date in descending order', () => {
-    service.resetTransactions();
-    initialTransactions.forEach(transaction => service.addTransaction(transaction));
-    const reqs = httpMock.match(`${environment.ec2instance}/transactions`);
-    reqs.forEach(req => req.flush({}));
-
+  it('should sort transactions by date in descending order', (done) => {
+    service.getTransaction();
+    const req = httpMock.expectOne(`${environment.ec2instance}/transactions`);
+    req.flush(initialTransactions);
     service.sortTransactions('date', 'desc');
-    service.transactions$.subscribe((sortedTransactions) => {
+    service.transactions$.subscribe(sortedTransactions => {
       expect(sortedTransactions[0].date).toEqual(new Date('2022-01-03'));
       expect(sortedTransactions[1].date).toEqual(new Date('2022-01-02'));
       expect(sortedTransactions[2].date).toEqual(new Date('2022-01-01'));
+      done();
     });
   });
 
-  it('should sort transactions by amount in ascending order', () => {
+  it('should sort transactions by amount in ascending order', (done) => {
+    service.getTransaction();
+    const req = httpMock.expectOne(`${environment.ec2instance}/transactions`);
+    req.flush(initialTransactions);
     service.sortTransactions('amount', 'asc');
     service.transactions$.subscribe((sortedTransactions) => {
       expect(sortedTransactions[0].amount).toBe(100);
       expect(sortedTransactions[1].amount).toBe(150);
       expect(sortedTransactions[2].amount).toBe(200);
+      done();
     });
   });
 
-  it('should sort transactions by amount in descending order', () => {
+  it('should sort transactions by amount in descending order', (done) => {
+    service.getTransaction();
+    const req = httpMock.expectOne(`${environment.ec2instance}/transactions`);
+    req.flush(initialTransactions);
     service.sortTransactions('amount', 'desc');
     service.transactions$.subscribe((sortedTransactions) => {
       expect(sortedTransactions[0].amount).toBe(200);
       expect(sortedTransactions[1].amount).toBe(150);
       expect(sortedTransactions[2].amount).toBe(100);
+      done();
     });
   });
 
-  it('should sort transactions by category in ascending order', () => {
+  it('should sort transactions by category in ascending order', (done) => {
+    service.getTransaction();
+    const req = httpMock.expectOne(`${environment.ec2instance}/transactions`);
+    req.flush(initialTransactions);
     service.sortTransactions('category', 'asc');
     service.transactions$.subscribe((sortedTransactions) => {
       expect(sortedTransactions[0].category).toBe('A');
       expect(sortedTransactions[1].category).toBe('B');
       expect(sortedTransactions[2].category).toBe('C');
+      done();
     });
   });
 
-  it('should sort transactions by category in descending order', () => {
+  it('should sort transactions by category in descending order', (done) => {
+    service.getTransaction();
+    const req = httpMock.expectOne(`${environment.ec2instance}/transactions`);
+    req.flush(initialTransactions);
     service.sortTransactions('category', 'desc');
     service.transactions$.subscribe((sortedTransactions) => {
       expect(sortedTransactions[0].category).toBe('C');
       expect(sortedTransactions[1].category).toBe('B');
       expect(sortedTransactions[2].category).toBe('A');
+      done();
     });
   });
 
   it('should filter transactions by category', (done) => {
+    service.getTransaction();
+    const req = httpMock.expectOne(`${environment.ec2instance}/transactions`);
+    req.flush(initialTransactions);
     service.filterTransactions('category', 'A');
     service.transactions$.subscribe(filteredTransactions => {
       expect(filteredTransactions.length).toBe(1);
@@ -140,6 +158,9 @@ describe('TransactionService', () => {
   });
 
   it('should filter transactions by amount', (done) => {
+    service.getTransaction();
+    const req = httpMock.expectOne(`${environment.ec2instance}/transactions`);
+    req.flush(initialTransactions);
     service.filterTransactions('amount', '150');
     service.transactions$.subscribe(filteredTransactions => {
       expect(filteredTransactions.length).toBe(1);
@@ -149,6 +170,9 @@ describe('TransactionService', () => {
   });
 
   it('should filter transactions by date', (done) => {
+    service.getTransaction();
+    const req = httpMock.expectOne(`${environment.ec2instance}/transactions`);
+    req.flush(initialTransactions);
     service.filterTransactions('date', '2022-01-02');
     service.transactions$.subscribe(filteredTransactions => {
       expect(filteredTransactions.length).toBe(1);
