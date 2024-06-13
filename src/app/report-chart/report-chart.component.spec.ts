@@ -73,7 +73,7 @@ describe('ReportChartComponent', () => {
             rotate: 70,
             multiline: false
           },
-          height: 100
+          height: 70
         },
         y: {
           label: {
