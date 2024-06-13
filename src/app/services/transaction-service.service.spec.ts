@@ -1,9 +1,12 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { Transaction, TransactionService } from './transaction-service.service';
+import { environment } from 'src/environments/environment';
 
 describe('TransactionService', () => {
   let service: TransactionService;
+  let httpMock: HttpTestingController;
 
   const initialTransactions: Transaction[] = [
     { id: 1, date: new Date('2022-01-01'), amount: 100, category: 'A' },
@@ -12,11 +15,17 @@ describe('TransactionService', () => {
   ];
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [TransactionService]
+    });
     service = TestBed.inject(TransactionService);
-     // Clear existing transactions and add the test transactions before each test
+    httpMock = TestBed.inject(HttpTestingController);
      service.resetTransactions();
-    initialTransactions.forEach(transaction => service.addTransaction(transaction));
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 
   it('should be created', () => {
@@ -25,30 +34,58 @@ describe('TransactionService', () => {
 
   it('should add a transaction', (done) => {
     const newTransaction: Transaction = { id: 4, date: new Date(), amount: 100, category: 'Food', description: 'Lunch' };
+
     service.addTransaction(newTransaction);
+
+    const req = httpMock.expectOne(`${environment.ec2instance}/transactions`);
+    expect(req.request.method).toBe('POST');
+    req.flush(newTransaction);
+
     service.transactions$.subscribe(transactions => {
-      expect(transactions.length).toBe(4);
-      expect(transactions[3]).toEqual(newTransaction);
+      expect(transactions.length).toBe(1);
+      expect(transactions[0]).toEqual(jasmine.objectContaining(newTransaction));
       done();
     });
   });
 
-  it('should get transactions', () => {
-    const transactions = service.getTransaction();
-    expect(transactions.length).toBe(3);
-    expect(transactions).toEqual(initialTransactions);
+  it('should get transactions', (done) => {
+    service.getTransaction();
+
+    const req = httpMock.expectOne(`${environment.ec2instance}/transactions`);
+    expect(req.request.method).toBe('GET');
+    req.flush(initialTransactions);
+
+    service.transactions$.subscribe(transactions => {
+      expect(transactions.length).toBe(3);
+      expect(transactions).toEqual(initialTransactions.map(transaction => ({
+        ...transaction,
+        date: new Date(transaction.date)
+      })));
+      done();
+    });
   });
 
-  it('should sort transactions by date in ascending order', () => {
+  it('should sort transactions by date in ascending order', (done) => {
+    service.resetTransactions();
+    initialTransactions.forEach(transaction => service.addTransaction(transaction));
+    const reqs = httpMock.match(`${environment.ec2instance}/transactions`);
+    reqs.forEach(req => req.flush({}));
+
     service.sortTransactions('date', 'asc');
     service.transactions$.subscribe(sortedTransactions => {
       expect(sortedTransactions[0].date).toEqual(new Date('2022-01-01'));
       expect(sortedTransactions[1].date).toEqual(new Date('2022-01-02'));
       expect(sortedTransactions[2].date).toEqual(new Date('2022-01-03'));
+      done();
     });
   });
 
   it('should sort transactions by date in descending order', () => {
+    service.resetTransactions();
+    initialTransactions.forEach(transaction => service.addTransaction(transaction));
+    const reqs = httpMock.match(`${environment.ec2instance}/transactions`);
+    reqs.forEach(req => req.flush({}));
+
     service.sortTransactions('date', 'desc');
     service.transactions$.subscribe((sortedTransactions) => {
       expect(sortedTransactions[0].date).toEqual(new Date('2022-01-03'));
@@ -120,12 +157,17 @@ describe('TransactionService', () => {
     });
   });
 
-  it('should reset transactions', () => {
+  it('should reset transactions', (done) => {
     const transaction: Transaction = { id: 4, date: new Date(), amount: 100, category: 'Food', description: 'Lunch' };
     service.addTransaction(transaction);
+
+    const req = httpMock.expectOne(`${environment.ec2instance}/transactions`);
+    req.flush(transaction);
+
     service.resetTransactions();
     service.transactions$.subscribe(transactions => {
       expect(transactions.length).toBe(0);
+      done();
     });
   });
 
