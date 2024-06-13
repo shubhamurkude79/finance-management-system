@@ -7,18 +7,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 describe('TransactionFormComponent', () => {
   let component: TransactionFormComponent;
   let fixture: ComponentFixture<TransactionFormComponent>;
-  let transactionService: TransactionService;
+  let transactionService: jasmine.SpyObj<TransactionService>;
 
   beforeEach(async () => {
+    const transactionServiceSpy = jasmine.createSpyObj('TransactionService', ['addTransaction']);
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
       declarations: [TransactionFormComponent],
-      providers: [TransactionService]
+      providers: [{ provide: TransactionService, useValue: transactionServiceSpy }]
     })
     .compileComponents();
     fixture = TestBed.createComponent(TransactionFormComponent);
     component = fixture.componentInstance;
-    transactionService = TestBed.inject(TransactionService);
+    transactionService = TestBed.inject(TransactionService) as jasmine.SpyObj<TransactionService>;
   });
 
   it('should create', () => {
@@ -53,7 +54,6 @@ describe('TransactionFormComponent', () => {
   });
 
   it('should call addTransaction method when form is submitted', () => {
-    spyOn(transactionService, 'addTransaction');
     component.transactionForm.patchValue({
       amount: 100,
       date: new Date(),
