@@ -14,6 +14,7 @@ export class DummyComponent implements OnInit, OnDestroy {
   limit: number = 20;
   offset: number = 0;
   allDataLoaded: boolean = false;
+  loading:boolean = false;
   private subscription: Subscription | undefined;
 
   constructor(private http: HttpClient) { }
@@ -29,6 +30,7 @@ export class DummyComponent implements OnInit, OnDestroy {
   }
 
   fetchData(){
+    this.loading = true;
     this.subscription = this.http.get(`${this.dummyURL}?_limit=${this.limit}&_start=${this.offset}`)
     .subscribe((data: any) => {
       if (data.length < this.limit) {
@@ -36,6 +38,7 @@ export class DummyComponent implements OnInit, OnDestroy {
       }
       this.dummyData = this.dummyData.concat(data);
       this.offset += this.limit;
+      this.loading = false;
     });
   }
 

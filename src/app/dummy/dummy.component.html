@@ -17,5 +17,14 @@
           </tr>
         </tbody>
       </table>
-      <button type="button" class="btn btn-secondary btn-block" (click)="fetchData()" *ngIf="!allDataLoaded">Load More</button>
+      <button type="button" class="btn btn-secondary btn-block" (click)="fetchData()" *ngIf="!allDataLoaded">
+        <ng-container *ngIf="loading; else loadMoreText">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Loading...
+        </ng-container>
+        <ng-template #loadMoreText>
+          Load More
+        </ng-template>
+        
+      </button>
 </div>
