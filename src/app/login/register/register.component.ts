@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
         error => {
           this.errorMessage = 'Registration Failed';
         }
-      )
+      );
     }
   }
 
