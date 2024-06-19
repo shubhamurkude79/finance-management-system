@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'home', component: DashboardComponent },
   { path: '404-page', component: PageNotFoundComponent },
   { path: 'table', loadChildren: () => import('./dummy/dummy.module').then(m => m.DummyModule) },
+  { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
   { path: '**', redirectTo: '/404-page', pathMatch: 'full' }
 ];
 
